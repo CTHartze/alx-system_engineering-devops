@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Writes process ID to file,
+# enters an infinite loop that prints a message and sleeps for 2 seconds,
+# sets up signal handlers for SIGINT, SIGTERM, and SIGQUIT.
+# When these signals are received, the script calls function
+# "terminator" to remove the file containing the process ID
+# exits the script.
+
+terminator() {
+  rm /var/run/myscript.pid
+  exit
+}
+
+echo "$$" > /var/run/myscript.pid
+
+while true
+do
+  echo "To infinity and beyond"
+  sleep 2
+  trap 'echo "Y U no love me?!"' SIGINT
+  trap 'echo "I hate the kill command" && terminator' SIGTERM
+  trap 'terminator' SIGQUIT
+done
