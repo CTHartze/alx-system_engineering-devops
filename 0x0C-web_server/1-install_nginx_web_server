@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Installs nginx web server
+
+# Updates packages before installations
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# Configures ufw to allow incoming traffic for nginx http service
+sudo ufw allow 'Nginx HTTP'
+
+# Creates index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Tests nginx configurations for syntax errors
+sudo nginx -t
+
+# Restarting Nginx
+sudo service nginx start
