@@ -15,7 +15,7 @@ path_to_ssh_key=$4
 
 
 # Disables strict host key check
-scp -o "StrictHostKeyCheck=no" -i "$path_to_ssh_key" "$path_to_file" "$username@$ip:~/"
+scp -o "StrictHostKeyCheck no" -i "$path_to_ssh_key" "$path_to_file" "$username@$ip:~/"
 
 # Checks if file transfer was successful
 if [ $? -eq 0 ]
