@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Script installs and configures HAProxy on lb-01 server
+
+# Installs and configures HAproxy on lb-01 server
+sudo apt-get -y update
+apt-get -y install haproxy
+
+# Edits config file
+server_config=\
+"
+frontend  CTHartze_frontend
+        bind *:80
+        mode http
+        default_backend CTHartze_backend
+backend CTHartze_backend
+        balance roundrobin
+        server 344610-web-01 54.89.117.235:80 check
+        server 344610-web-02 52.23.212.118:80 check
+"
+echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
+
+# Enables haproxy start-up by init script
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
+# Tests HAproxy configuration file
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Restarts Nginx service
+sudo service haproxy restart

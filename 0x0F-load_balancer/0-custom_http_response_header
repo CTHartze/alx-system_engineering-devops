@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Config web-02 and web-01 to be identical, custom response header
+
+# Updates packages before installations
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Creates index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Permanent redirection 301
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/CTHartze permanent;"
+sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+
+# Creates 404 custom error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+
+# Creates http response header
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+
+# Testing configurations for syntax errors
+sudo nginx -t
+
+# Restarts nginx after changes
+sudo service nginx restart
