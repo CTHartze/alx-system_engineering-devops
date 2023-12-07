@@ -48,4 +48,4 @@ backend CTHartze_back_end
     server 344610-web-02 52.23.212.118:80 check
 
 backend letsencrypt-backend
-    server letsencrypt 127.0.0.1:54321
+    server letsencrypt 54.210.51.55:54321
