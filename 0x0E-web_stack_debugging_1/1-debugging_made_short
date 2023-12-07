@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Based off task 0 but forcefully removes file if it exists
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
+rm /run/nginx.pid
