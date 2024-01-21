@@ -1,6 +1,6 @@
 # Incident Postmortem: Service Outage
 
-![Alt Text](https://gifdb.com/gif/programming-command-line-kermit-the-frog-t4tghmsf6oqx3c43.html)
+![Alt Text](https://gifdb.com/images/high/programming-command-line-kermit-the-frog-t4tghmsf6oqx3c43.webp)
 
 ## Issue Summary
 - **Duration:** The outage occurred on [2024-01-20] from [17:18] to [18:19] in [GMT+2].
